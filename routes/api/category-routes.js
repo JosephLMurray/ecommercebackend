@@ -48,7 +48,7 @@ router.put("/:id", async (req, res) => {
   Category.update(
     {
       // All the fields you can update and the data attached to the request body.
-      name: req.body.name,
+      category_name: req.body.category_name,
     },
     {
       // Gets the category based on the id given in the request parameters
@@ -59,7 +59,7 @@ router.put("/:id", async (req, res) => {
   )
     .then((updatedCategory) => {
       // Sends the updated category as a json response
-      res.json(updatedCategory);
+      res.json({ message: `Updated name to ${req.body.category_name}` });
     })
     .catch((err) => res.json(err));
 });
@@ -78,7 +78,7 @@ router.delete("/:id", async (req, res) => {
       return;
     }
 
-    res.status(200).json(categoryData);
+    res.status(200).json({ message: "Category deleted succesfully." });
   } catch (err) {
     res.status(500).json(err);
   }
