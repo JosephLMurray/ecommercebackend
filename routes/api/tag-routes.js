@@ -6,7 +6,7 @@ const { Tag, Product, ProductTag } = require("../../models");
 router.get("/", async (req, res) => {
   try {
     const tagData = await Tag.findAll({
-      include: [{ model: Product, through: ProductTag, as: "products" }],
+      include: [{ model: Product, through: ProductTag }],
     });
     res.status(200).json(tagData);
   } catch (err) {
@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
   // find a single tag by its `id`
   try {
     const tagData = await Tag.findByPk(req.params.id, {
-      include: [{ model: Product, through: ProductTag, as: "products" }],
+      include: [{ model: Product, through: ProductTag }],
     });
 
     if (!tagData) {
@@ -48,7 +48,7 @@ router.put("/:id", async (req, res) => {
   Tag.update(
     {
       // All the fields you can update and the data attached to the request body.
-      name: req.body.name,
+      tag_name: req.body.tag_name,
     },
     {
       // Gets the tag based on the id given in the request parameters
@@ -59,7 +59,7 @@ router.put("/:id", async (req, res) => {
   )
     .then((updatedTag) => {
       // Sends the updated tag as a json response
-      res.json(updatedTag);
+      res.json(`Updated tag name to ${req.body.tag_name}`);
     })
     .catch((err) => res.json(err));
 });
@@ -78,7 +78,7 @@ router.delete("/:id", async (req, res) => {
       return;
     }
 
-    res.status(200).json(tagData);
+    res.status(200).json({ message: "Tag deleted succesfully." });
   } catch (err) {
     res.status(500).json(err);
   }

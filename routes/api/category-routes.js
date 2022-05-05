@@ -59,7 +59,9 @@ router.put("/:id", async (req, res) => {
   )
     .then((updatedCategory) => {
       // Sends the updated category as a json response
-      res.json({ message: `Updated name to ${req.body.category_name}` });
+      res.json({
+        message: `Updated category name to ${req.body.category_name}`,
+      });
     })
     .catch((err) => res.json(err));
 });
